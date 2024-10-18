@@ -35,27 +35,27 @@ try:
 
     print("---")
 
-    URL="http://www.bom.gov.au/vic/observations/melbourne.shtml?ref=hdr"
+    bom_url = "http://www.bom.gov.au/vic/observations/melbourne.shtml?ref=hdr"
 
-    print(f"{header['refresh_message']} | color='black' href='{URL}'")
-    print(f"Location: {header['name']} | color='black' href='{URL}'")
+    print(f"{header['refresh_message']} | color='black' href='{bom_url}'")
+    print(f"Location: {header['name']} | color='black' href='{bom_url}'")
 
     wind_dir = latest['wind_dir']
 
     if wind_dir is None:
-        print(f"Wind: ???? | color='black' href='{URL}'")
+        print(f"Wind: ???? | color='black' href='{bom_url}'")
     elif wind_dir == "CALM":
-        print(f"Wind: calm | color='black' href='{URL}'")
+        print(f"Wind: calm | color='black' href='{bom_url}'")
     else:
         print(f"Wind: {latest['wind_dir']} - "
               f"{latest['wind_spd_kt']} kts gusting to {latest['gust_kt']} kts "
-              f"| color='black' href='{URL}'")
+              f"| color='black' href='{bom_url}'")
 
     print("---")
 
     now = datetime.datetime.now()
     retrieved = now.strftime("%I:%M %p %A %e %B %Y")
-    print(f"Retrieved at {retrieved}| color='black' size=10 href='{URL}'")
+    print(f"Retrieved at {retrieved}| color='black' size=10 href='{bom_url}'")
 
 except Exception as exception:  # pylint: disable=broad-except
 
