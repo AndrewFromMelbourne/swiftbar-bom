@@ -13,17 +13,15 @@
 # <swiftbar.hideDisablePlugin>true</swiftbar.hideDisablePlugin>
 # <swiftbar.hideSwiftBar>true</swiftbar.hideSwiftBar>
 
-import subprocess
-import requests
+import datetime
+import json
+import urllib.request
 
 try:
-    req = requests.get('http://reg.bom.gov.au/fwo/IDV60901/IDV60901.95867.json')
-
-    # pylint: disable=E1101
-    if req.status_code != requests.codes.ok:
-        raise Exception('error from BOM', req.status_code)
-
-    json = req.json()
+    url = 'http://reg.bom.gov.au/fwo/IDV60901/IDV60901.95867.json'
+    with urllib.request.urlopen(url) as response:
+        data = response.read().decode(response.info().get_param('charset') or 'utf-8')
+    json = json.loads(data)
 
     observations = json['observations']
     header = observations['header'][0]
@@ -55,11 +53,8 @@ try:
 
     print("---")
 
-    result = subprocess.run(['/bin/date', '+%l:%M %p %Z %A %e %B %Y'],
-                            check = False,
-                            stdout = subprocess.PIPE,
-                            stderr = subprocess.PIPE)
-    retrieved = result.stdout.decode().rstrip()
+    now = datetime.datetime.now()
+    retrieved = now.strftime("%I:%M %p %A %e %B %Y")
     print(f"Retrieved at {retrieved}| color='black' size=10 href='{URL}'")
 
 except Exception as exception:  # pylint: disable=broad-except
