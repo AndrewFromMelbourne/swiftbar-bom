@@ -59,6 +59,6 @@ try:
 
 except Exception as exception:  # pylint: disable=broad-except
 
-    print("bom | color='red' size=11")
+    print("bom | color='gray' size=11")
     print("---")
     print(exception)
