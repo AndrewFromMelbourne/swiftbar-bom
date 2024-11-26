@@ -54,7 +54,10 @@ try:
     print("---")
 
     now = datetime.datetime.now()
-    retrieved = now.strftime("%I:%M %p %A %e %B %Y")
+    local_now = now.astimezone()
+    local_tz = local_now.tzinfo
+    local_tzname = local_tz.tzname(local_now)
+    retrieved = now.strftime("%-I:%M %p ") + local_tzname + now.strftime(" %A %e %B %Y")
     print(f"Retrieved at {retrieved}| color='black' size=10 href='{bom_url}'")
 
 except Exception as exception:  # pylint: disable=broad-except
